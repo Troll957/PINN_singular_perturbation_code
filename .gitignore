@@ -1,0 +1,33 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Output directories written by the scripts
+runs/
+demo_out/
+demo_2d_out/
+eps_results/
+eps_full/
+eps_fix/
+case_results/
+case_figs/
+norm_results/
+ablate_results/
+diag_results/
+seeds_results/
+
+# Arrays, figures and logs produced by the runs
+*.npz
+*.pdf
+*.png
+*.log
+
+# Editors
+.vscode/
+.idea/
