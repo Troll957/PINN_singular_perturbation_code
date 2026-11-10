@@ -136,12 +136,31 @@ python demo.py --eps 1e-5 --strategy fixed
 ```
 
 `demo.py` accepts `--strategy {residual, distribution, uniform, fixed}` and
-`--weighting {voronoi, mean}`.
+`--weighting {voronoi, mean}`, together with `--volume-method {voronoi, knn}` and
+`--knn-neighbors K`; `demo_2d.py` accepts the same `--volume-method` flag, with
+`knn` as its default.
+`--volume-method voronoi` builds the exact cell measures by half-space
+intersection and needs SciPy; `knn` estimates them from the `K`-nearest-neighbour
+distances. The paper uses the grid-quantised measures in one space dimension and
+the estimate in two, which is what the defaults above reproduce.
+
 The additional `distribution` rule draws the new points with probability
 proportional to a power of the residual; it is implemented for completeness but
 is **not** used anywhere in the paper, whose results use `residual` throughout. The uniform rule draws from the *same* candidate
 pool with the same cardinality, so the comparison isolates the effect of
 placement from the effect of adding points.
+
+The comparison between the estimated and the exact cell measures of
+Section 3.6 of the paper is reproduced by
+
+```bash
+cd case2
+python cmp_weight.py --case case2 --eps 1e-4 --rounds 20 --epochs 1000 \
+       --n-int0 1024 --add 200 --seeds 0
+```
+
+which runs the three arms `(volume, knn)`, `(mean, knn)` and
+`(volume, voronoi)` and writes the errors to `cmp_weight/`.
 
 > **Legacy files.** `spp_pinn/mesh.py` and `spp_pinn/mesh_variant.py` are an
 > early quadtree $h$-adaptive prototype. They are not used anywhere in the

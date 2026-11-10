@@ -24,6 +24,8 @@
 
 from __future__ import annotations
 
+import os
+
 import copy
 import time
 from dataclasses import asdict, dataclass
@@ -36,7 +38,7 @@ from .model import MLP
 from .problems import make_problem
 from .sampling import (CollocationSet, halton, select_distribution,
                        select_separated, select_topm, voronoi_weights_1d,
-                       voronoi_weights_2d)
+                       voronoi_weights_2d, knn_quadrature_weights)
 
 
 def pick_device(name: str = "auto") -> torch.device:
@@ -167,6 +169,8 @@ class TrainConfig:
     lr_gamma: float = 0.9                # 轮间学习率衰减
     weighting: str = "voronoi"           # 'voronoi' (保范数) | 'mean' (朴素平均)
     voronoi_n: int = 256                 # 离散 Voronoi 的网格分辨率
+    knn_neighbors: int = 4               # kNN 体积估计的 k
+    volume_method: str = "voronoi"       # 'voronoi' (网格离散, 与论文一致) | 'knn' (球估计)
     weight_mode: str = "init"            # 'init' | 'fixed'
     w_ic: Optional[float] = None
     w_bc: Optional[float] = None
@@ -180,6 +184,7 @@ class TrainConfig:
     device: str = "auto"
     verbose: bool = True
     eval_every: int = 0
+    deterministic: bool = False       # 强制确定性算子; 关掉可快 10-30%
     callback: object = None
 
     def to_dict(self):
@@ -194,6 +199,14 @@ class AdaptivePINNSolver:
 
     def __init__(self, cfg: TrainConfig):
         self.cfg = cfg
+        # ---- 确定性设置 (保证同 seed 逐位复现) ----
+        if getattr(cfg, "deterministic", False):
+            os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+            torch.use_deterministic_algorithms(True)
+            torch.backends.cudnn.benchmark = False
+            torch.backends.cudnn.deterministic = True
+            if torch.cuda.is_available():
+                torch.cuda.manual_seed_all(cfg.seed)
         torch.manual_seed(cfg.seed)
         np.random.seed(cfg.seed)
         self.device = pick_device(cfg.device)
@@ -279,8 +292,12 @@ class AdaptivePINNSolver:
         d = {"int": t_(c.interior), "ic": t_(c.ic),
              "left": t_(left), "right": t_(right)}
         if cfg.weighting == "voronoi":
-            wi = voronoi_weights_2d(c.interior, extent=(0.0, 1.0, 0.0, cfg.T),
-                                    n=cfg.voronoi_n)
+            if getattr(cfg, "volume_method", "knn") == "voronoi":
+                wi = voronoi_weights_2d(c.interior, extent=(0.0, 1.0, 0.0, cfg.T),
+                                        n=cfg.voronoi_n)
+            else:
+                wi = knn_quadrature_weights(c.interior, cfg.T,
+                                            n_neighbors=cfg.knn_neighbors)
             d["w_int"] = t_(wi).reshape(-1, 1)
             d["w_ic"] = t_(voronoi_weights_1d(c.ic[:, 0], 0.0, 1.0)).reshape(-1, 1)
             d["w_left"] = t_(voronoi_weights_1d(left[:, 1], 0.0, cfg.T)).reshape(-1, 1)

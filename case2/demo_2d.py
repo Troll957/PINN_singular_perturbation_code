@@ -89,6 +89,8 @@ def main() -> None:
                     choices=["residual", "distribution", "uniform", "fixed"])
     ap.add_argument("--weighting", default="knn", choices=["knn", "mean"])
     ap.add_argument("--knn-neighbors", type=int, default=4)
+    ap.add_argument("--volume-method", default="knn", choices=["knn", "voronoi"],
+                    help="knn: k 近邻估计; voronoi: 精确胞体积 (需要 SciPy)")
     ap.add_argument("--hidden", default="64,64,64")
     ap.add_argument("--eval-n", type=int, default=61)
     ap.add_argument("--device", default="auto",
@@ -104,6 +106,7 @@ def main() -> None:
                    n_int0=args.n_int0, add_per_round=args.add,
                    strategy=args.strategy, weighting=args.weighting,
                    knn_neighbors=args.knn_neighbors,
+                   volume_method=args.volume_method,
                    hidden=tuple(int(h) for h in args.hidden.split(",")),
                    eval_n=args.eval_n, device=args.device, verbose=False)
 

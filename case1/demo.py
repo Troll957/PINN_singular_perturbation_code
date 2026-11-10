@@ -36,6 +36,10 @@ def main() -> None:
     ap.add_argument("--strategy", default="residual",
                     choices=["residual", "distribution", "uniform", "fixed"])
     ap.add_argument("--weighting", default="voronoi", choices=["voronoi", "mean"])
+    ap.add_argument("--volume-method", default="voronoi",
+                    choices=["voronoi", "knn"],
+                    help="voronoi: 网格离散胞; knn: k 近邻估计")
+    ap.add_argument("--knn-neighbors", type=int, default=4)
     ap.add_argument("--candidate-pool", type=int, default=20000)
     ap.add_argument("--beta", type=float, default=1.0)
     ap.add_argument("--min-dist", type=float, default=0.0)
@@ -57,6 +61,7 @@ def main() -> None:
         n_int0=args.n_int0, n_ic0=64, n_bc0=64, init_method="halton",
         rounds=args.rounds, epochs_per_round=args.epochs,
         add_per_round=args.add, strategy=args.strategy, weighting=args.weighting,
+        volume_method=args.volume_method, knn_neighbors=args.knn_neighbors,
         candidate_pool=args.candidate_pool, beta=args.beta, min_dist=args.min_dist,
         lr=args.lr, lr_schedule="cosine", lr_gamma=0.9,
         hard_constraint=args.hard_constraint,

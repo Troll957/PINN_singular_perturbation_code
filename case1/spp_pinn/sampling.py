@@ -282,3 +282,29 @@ def voronoi_weights_1d(values: np.ndarray, lo: float, hi: float) -> np.ndarray:
     out = np.empty(v.size)
     out[order] = w
     return out
+
+def knn_quadrature_weights(coords, measure, n_neighbors=4, chunk=2048):
+    r"""k 近邻体积估计 ``omega_i = measure * rbar_i^D / sum_j rbar_j^D``。
+
+    ``rbar_i`` 是 $z_i$ 到其 $k$ 个最近邻距离的均值，$D$ 是坐标维数。
+    与 :func:`voronoi_weights_2d`（网格离散 Voronoi）相比，它不需要网格、
+    没有量化误差，代价是 $O(N k)$；与精确胞体积相比，它的比值
+    $q_i=\omega_i/|V_i|$ 有界但不为 1（论文 Theorem 2 的
+    ``eq:qratio`` 假设），因此对应的是 $q$-加权泛函而非 $\int r^2$。
+    """
+    P = np.ascontiguousarray(coords, dtype=float)
+    N, D = P.shape
+    if N <= 1:
+        return np.full(N, measure)
+    k = int(min(max(1, n_neighbors), N - 1))
+    rbar = np.empty(N)
+    for s0 in range(0, N, chunk):
+        c = P[s0:s0 + chunk]
+        d2 = ((c[:, None, :] - P[None, :, :]) ** 2).sum(-1)
+        part = np.partition(d2, k, axis=1)[:, 1:k + 1]
+        rbar[s0:s0 + chunk] = np.sqrt(part).mean(axis=1)
+    w = rbar ** D
+    tot = w.sum()
+    if not np.isfinite(tot) or tot <= 0:
+        return np.full(N, measure / N)
+    return w / tot * measure
