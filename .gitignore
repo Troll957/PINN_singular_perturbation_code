@@ -31,3 +31,7 @@ seeds_results/
 # Editors
 .vscode/
 .idea/
+
+# 论文数据归档与绘图脚本的数据（体积小，纳入版本控制）
+!paper_data_2026-11-14/**
+!paper_figs/data/**

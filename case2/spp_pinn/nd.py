@@ -660,7 +660,7 @@ class NDConfig:
     weighting: str = "knn"           # knn | mean
     knn_neighbors: int = 4
     volume_method: str = "knn"       # 'knn' (球估计) | 'voronoi' (精确胞体积)
-    deterministic: bool = False      # 强制确定性算子; 关掉可快 10-30%
+    deterministic: bool = True       # 强制确定性算子; 关掉可快 10-30%
     # 优化
     lr: float = 2e-3
     lr_schedule: str = "cosine"
