@@ -365,9 +365,20 @@ class AdaptivePINNSolver:
                 "rel_l2": float(np.linalg.norm(err) / denom) if denom > 0 else float("nan")}
 
     def layer_fraction(self, factor: float = 4.0) -> float:
-        """内部配点中落在 $x\\le \\text{factor}\\cdot\\sqrt{\\varepsilon}$ 内的比例。"""
+        """内部配点中落在层内的比例。
+
+        层的位置由算例决定 (``problem.layer``: ``"x=0"`` / ``"x=1"`` /
+        ``"x=1/2"``), 阈值一律取 ``factor*sqrt(eps)`` 到该位置的**距离**。
+        早期版本把阈值写死成 ``x <= factor*sqrt(eps)``, 对 ``right`` 与
+        ``interior`` 两个算例测的是 x 附近的区域而不是层所在的位置, 结果无意义。
+        """
         thr = factor * float(np.sqrt(self.cfg.eps))
-        return float(np.mean(self.points.interior[:, 0] <= thr))
+        x = np.asarray(self.points.interior)[:, 0]
+        try:
+            xc = float(str(getattr(self.problem, "layer", "x=0")).split("=")[1])
+        except (IndexError, ValueError):
+            xc = 0.0
+        return float(np.mean(np.abs(x - xc) <= thr))
 
     # ==================================================================
     # 自适应增点

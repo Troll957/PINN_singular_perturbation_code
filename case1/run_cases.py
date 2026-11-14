@@ -66,6 +66,7 @@ def main() -> None:
     ap.add_argument("--epochs", type=int, default=2000)
     ap.add_argument("--n-int0", type=int, default=1024)
     ap.add_argument("--add", type=int, default=150)
+    ap.add_argument("--eps", default="1e-3,1e-4,1e-5,1e-6")
     ap.add_argument("--device", default="auto")
     ap.add_argument("--outdir", default="case_results")
     ap.add_argument("--quick", action="store_true", help="小预算自检")
@@ -75,7 +76,7 @@ def main() -> None:
     os.makedirs(args.outdir, exist_ok=True)
     print(f"device = {describe_device(pick_device(args.device))}\n", flush=True)
 
-    eps_list = (1e-4, 1e-5, 1e-6)
+    eps_list = tuple(float(v) for v in args.eps.split(","))
     n_ref = args.n_int0 + args.rounds * args.add
     steps = (args.rounds + 1) * args.epochs
     out = {"case": "case1", "rounds": args.rounds, "epochs": args.epochs,

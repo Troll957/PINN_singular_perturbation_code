@@ -1,0 +1,249 @@
+{
+  "Table2_Case1": {
+    "setup": "1D, n0=1024, K=20, m=200, E=1000, 5024 interior, 21000 steps",
+    "rows": [
+      {
+        "eps": 0.001,
+        "ad_l2": 0.00025439,
+        "ad_max": 0.0015402,
+        "fx_l2": 0.00015584,
+        "fx_max": 0.00034291,
+        "ratio_l2": 0.61,
+        "ratio_max": 0.22,
+        "layer_ad": 0.689,
+        "layer_fx": 0.127
+      },
+      {
+        "eps": 0.0001,
+        "ad_l2": 0.0012538,
+        "ad_max": 0.0023677,
+        "fx_l2": 0.00044773,
+        "fx_max": 0.0039455,
+        "ratio_l2": 0.36,
+        "ratio_max": 1.67,
+        "layer_ad": 0.706,
+        "layer_fx": 0.04
+      },
+      {
+        "eps": 1e-05,
+        "ad_l2": 0.002243,
+        "ad_max": 0.0063652,
+        "fx_l2": 0.0044298,
+        "fx_max": 0.058812,
+        "ratio_l2": 1.97,
+        "ratio_max": 9.23,
+        "layer_ad": 0.507,
+        "layer_fx": 0.013
+      },
+      {
+        "eps": 1e-06,
+        "ad_l2": 0.026906,
+        "ad_max": 0.08943,
+        "fx_l2": 0.091416,
+        "fx_max": 1.8138,
+        "ratio_l2": 3.4,
+        "ratio_max": 20.2,
+        "layer_ad": 0.237,
+        "layer_fx": 0.004
+      }
+    ]
+  },
+  "Table3_Case2": {
+    "setup": "2D corner, K=50, m=500, E=8000, 29096 interior, 408000 steps",
+    "rows": [
+      {
+        "eps": 0.001,
+        "ad_l2": 0.0004728,
+        "ad_max": 0.0023416,
+        "fx_l2": 0.00087312,
+        "fx_max": 0.05227,
+        "ratio_l2": 1.85,
+        "ratio_max": 22.3,
+        "layer_ad": 0.537,
+        "layer_fx": 0.127
+      },
+      {
+        "eps": 0.0001,
+        "ad_l2": 0.0011567,
+        "ad_max": 0.011024,
+        "fx_l2": 0.0037947,
+        "fx_max": 0.31655,
+        "ratio_l2": 3.28,
+        "ratio_max": 28.7,
+        "layer_ad": 0.389,
+        "layer_fx": 0.04
+      },
+      {
+        "eps": 1e-05,
+        "ad_l2": 0.0024661,
+        "ad_max": 0.049069,
+        "fx_l2": 0.0099156,
+        "fx_max": 0.87824,
+        "ratio_l2": 4.02,
+        "ratio_max": 17.9,
+        "layer_ad": 0.212,
+        "layer_fx": 0.013
+      }
+    ]
+  },
+  "Table4_Case3": {
+    "setup": "2D moving layer, K=50, m=500, E=8000, 29096 interior, 408000 steps",
+    "rows": [
+      {
+        "eps": 0.001,
+        "ad_l2": 0.0011625,
+        "ad_max": 0.0035883,
+        "fx_l2": 0.060685,
+        "fx_max": 0.29113,
+        "ratio_l2": 52,
+        "ratio_max": 81,
+        "layer_ad": 0.859,
+        "layer_fx": 0.237
+      },
+      {
+        "eps": 0.0001,
+        "ad_l2": 0.0029323,
+        "ad_max": 0.008478,
+        "fx_l2": 0.18625,
+        "fx_max": 0.86241,
+        "ratio_l2": 64,
+        "ratio_max": 102,
+        "layer_ad": 0.766,
+        "layer_fx": 0.079
+      },
+      {
+        "eps": 1e-05,
+        "ad_l2": 0.0042941,
+        "ad_max": 0.021652,
+        "fx_l2": 0.1891,
+        "fx_max": 0.84102,
+        "ratio_l2": 44,
+        "ratio_max": 39,
+        "layer_ad": 0.518,
+        "layer_fx": 0.025
+      },
+      {
+        "eps": 1e-06,
+        "ad_l2": 0.0091206,
+        "ad_max": 0.058518,
+        "fx_l2": 0.22207,
+        "fx_max": 1.0412,
+        "ratio_l2": 24,
+        "ratio_max": 18,
+        "layer_ad": 0.237,
+        "layer_fx": 0.008
+      }
+    ]
+  },
+  "Table5_Case4": {
+    "setup": "2D curved boundary, K=50, m=500, E=8000, 29096 interior, 408000 steps",
+    "rows": [
+      {
+        "eps": 0.001,
+        "ad_l2": 0.0068396,
+        "ad_max": 0.020567,
+        "fx_l2": 0.0054409,
+        "fx_max": 0.018984,
+        "ratio_l2": 0.8,
+        "ratio_max": 0.92,
+        "layer_ad": 0.874,
+        "layer_fx": 0.227
+      },
+      {
+        "eps": 0.0001,
+        "ad_l2": 0.022549,
+        "ad_max": 0.079206,
+        "fx_l2": 0.028453,
+        "fx_max": 0.45845,
+        "ratio_l2": 1.26,
+        "ratio_max": 5.78,
+        "layer_ad": 0.707,
+        "layer_fx": 0.079
+      }
+    ]
+  },
+  "Table6_Case5": {
+    "setup": "inverse source, eps=1e-4, 8392 points, 168000 steps, 192 noisy observations, sigma=1.7e-2",
+    "params": {
+      "A": {
+        "adapt": 1.980511,
+        "fixed": 1.919729,
+        "truth": 2.0,
+        "ratio": 4.1
+      },
+      "s0": {
+        "adapt": 0.149974,
+        "fixed": 0.150124,
+        "truth": 0.15,
+        "ratio": 4.8
+      },
+      "v": {
+        "adapt": 0.700316,
+        "fixed": 0.700579,
+        "truth": 0.7,
+        "ratio": 1.8
+      }
+    },
+    "derived": {
+      "src_rel_l2": {
+        "adapt": 0.0242417,
+        "fixed": 0.0699591
+      },
+      "max_err": {
+        "adapt": 0.0695624,
+        "fixed": 0.264598
+      },
+      "layer_fraction": {
+        "adapt": 0.2937,
+        "fixed": 0.0800227
+      }
+    }
+  },
+  "Table7_Ablation": {
+    "setup": "Case2, eps=1e-5, three rules x two weightings, 29096 interior, 408000 steps",
+    "rows": [
+      {
+        "rule": "residual (RAR)",
+        "weight": "volume",
+        "l2": 0.0024547,
+        "max": 0.051482,
+        "layer": 0.211
+      },
+      {
+        "rule": "residual (RAR)",
+        "weight": "mean",
+        "l2": 0.0035539,
+        "max": 0.026155,
+        "layer": 0.176
+      },
+      {
+        "rule": "distribution (RAD)",
+        "weight": "volume",
+        "l2": 0.0052624,
+        "max": 0.10673,
+        "layer": 0.465
+      },
+      {
+        "rule": "distribution (RAD)",
+        "weight": "mean",
+        "l2": 0.0067726,
+        "max": 0.11788,
+        "layer": 0.216
+      },
+      {
+        "rule": "uniform control",
+        "weight": "volume",
+        "l2": 0.010733,
+        "max": 0.70237,
+        "layer": 0.013
+      },
+      {
+        "rule": "uniform control",
+        "weight": "mean",
+        "l2": 0.0041358,
+        "max": 0.19176,
+        "layer": 0.013
+      }
+    ]
+  }
+}

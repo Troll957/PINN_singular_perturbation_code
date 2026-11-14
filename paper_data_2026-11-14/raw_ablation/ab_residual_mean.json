@@ -1,0 +1,16 @@
+{
+  "case": "case2",
+  "eps": 1e-05,
+  "strategy": "residual",
+  "weighting": "mean",
+  "N": 31880,
+  "n_int": 29096,
+  "rel_l2": 0.0035539025441275263,
+  "max_err": 0.026155319064855576,
+  "frac_layer": 0.1763816332141875,
+  "wall": 5433.577471733093,
+  "rounds": 50,
+  "epochs_per_round": 8000,
+  "total_steps": 408000,
+  "seed": 0
+}

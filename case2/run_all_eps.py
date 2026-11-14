@@ -95,7 +95,9 @@ def main():
     for eps in eps_list:
         for variant in ("adaptive", "fixed"):
             t0 = time.time()
-            cfg = cfg_of(prob_name, eps, a.rounds if variant == "adaptive" else 0,
+            # 对照组同样走 a.rounds 轮, 但 strategy="fixed" 使加点为空操作,
+            # 于是两边都是 (rounds+1)*epochs 步、同样的余弦重启与衰减调度。
+            cfg = cfg_of(prob_name, eps, a.rounds,
                          a.epochs, n_ref if variant == "fixed" else a.n_int0,
                          a.add, "residual" if variant == "adaptive" else "fixed",
                          "knn", a.device, a.eval_n)

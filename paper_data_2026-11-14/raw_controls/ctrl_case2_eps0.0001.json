@@ -1,0 +1,16 @@
+{
+  "case": "case2",
+  "eps": 0.0001,
+  "variant": "fixed",
+  "N": 29480,
+  "n_int": 29096,
+  "rel_l2": 0.003794719166776046,
+  "max_err": 0.3165508806705475,
+  "frac_layer": 0.04007423700852351,
+  "wall": 7671.997044801712,
+  "rounds": 50,
+  "epochs_per_round": 8000,
+  "total_steps": 408000,
+  "strategy": "fixed",
+  "seed": 0
+}

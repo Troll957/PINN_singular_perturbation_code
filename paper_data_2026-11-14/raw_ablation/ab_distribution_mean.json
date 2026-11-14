@@ -1,0 +1,16 @@
+{
+  "case": "case2",
+  "eps": 1e-05,
+  "strategy": "distribution",
+  "weighting": "mean",
+  "N": 31880,
+  "n_int": 29096,
+  "rel_l2": 0.006772553713978171,
+  "max_err": 0.11787956953048706,
+  "frac_layer": 0.21563101457244982,
+  "wall": 5406.185438871384,
+  "rounds": 50,
+  "epochs_per_round": 8000,
+  "total_steps": 408000,
+  "seed": 0
+}

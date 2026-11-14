@@ -104,6 +104,7 @@ def main() -> None:
                                args.eval_n, args.device)
                 if variant == "fixed":
                     cfg.n_int0 = n_ref
+                    cfg.epochs_per_round = (args.rounds + 1) * args.epochs
                 r = run_one(cfg)
                 r.update(eps=eps, variant=variant)
                 out["sweep"].append(r)
